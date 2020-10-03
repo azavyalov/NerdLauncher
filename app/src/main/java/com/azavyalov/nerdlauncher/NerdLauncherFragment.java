@@ -1,10 +1,10 @@
 package com.azavyalov.nerdlauncher;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -68,14 +68,19 @@ public class NerdLauncherFragment extends Fragment {
 
         public ActivityHolder(@NonNull View itemView) {
             super(itemView);
-            mNameTextView = (TextView) itemView;
+            mNameTextView = itemView.findViewById(android.R.id.text1);
         }
 
         public void bindActivity(ResolveInfo resolveInfo) {
             mResolveInfo = resolveInfo;
             PackageManager pm = getActivity().getPackageManager();
+
             String appName = mResolveInfo.loadLabel(pm).toString();
             mNameTextView.setText(appName);
+
+            Drawable appIcon = mResolveInfo.loadIcon(pm);
+            mNameTextView.setCompoundDrawablesWithIntrinsicBounds(null, null, appIcon, null);
+
             mNameTextView.setOnClickListener(this);
         }
 
